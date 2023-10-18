@@ -11,9 +11,11 @@ public class Main extends JPanel {
     // 列
     public static int col = width / CELL_SIZE;
     private Snake snake;
+    private Fruit fruit;
 
     public Main() {
         snake = new Snake();
+        fruit = new Fruit();
     }
 
     public static void main(String[] args) {
@@ -36,5 +38,6 @@ public class Main extends JPanel {
         // draw a black background
         g.fillRect(0, 0, width, height);
         snake.drawSnake(g);
+        fruit.drawFruit(g);
     }
 }
