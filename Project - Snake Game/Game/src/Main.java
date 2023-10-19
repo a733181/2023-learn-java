@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main extends JPanel {
 
@@ -10,12 +12,25 @@ public class Main extends JPanel {
     public static int row = height / CELL_SIZE;
     // 列
     public static int col = width / CELL_SIZE;
+    // 方向
+    private static String direction;
     private Snake snake;
     private Fruit fruit;
+    private Timer t;
+    // 速度
+    private int speed = 500;
 
     public Main() {
         snake = new Snake();
         fruit = new Fruit();
+        t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                repaint();
+            }
+        }, 0, speed);
+        direction = "Right";
     }
 
     public static void main(String[] args) {
@@ -39,5 +54,27 @@ public class Main extends JPanel {
         g.fillRect(0, 0, width, height);
         snake.drawSnake(g);
         fruit.drawFruit(g);
+
+        // remove snake tail and put in head
+        int snakeX = snake.getSnakeBody().get(0).x;
+        int snakeY = snake.getSnakeBody().get(0).y;
+
+
+        // Right , x += CELL_SIZE
+        // Left , x -= CELL_SIZE
+        // down , y += CELL_SIZE
+        // top , y -= CELL_SIZE
+        if (direction.equals("Left")) {
+            snakeX -= CELL_SIZE;
+        } else if (direction.equals("Right")) {
+            snakeX += CELL_SIZE;
+        } else if (direction.equals("Top")) {
+            snakeY -= CELL_SIZE;
+        } else if (direction.equals("Down")) {
+            snakeY += CELL_SIZE;
+        }
+        Node snake0 = new Node(snakeX, snakeY);
+        snake.getSnakeBody().remove(snake.getSnakeBody().size() - 1);
+        snake.getSnakeBody().add(0, snake0);
     }
 }
