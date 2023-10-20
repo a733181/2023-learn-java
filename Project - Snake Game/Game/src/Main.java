@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Main extends JPanel {
+public class Main extends JPanel implements KeyListener {
 
     public static final int CELL_SIZE = 20;
     public static int width = 400;
@@ -20,6 +22,9 @@ public class Main extends JPanel {
     // 速度
     private int speed = 500;
 
+    // 是否可按上下左右
+    private boolean allowKeyPress;
+
     public Main() {
         snake = new Snake();
         fruit = new Fruit();
@@ -31,6 +36,8 @@ public class Main extends JPanel {
             }
         }, 0, speed);
         direction = "Right";
+        addKeyListener(this);
+        allowKeyPress = true;
     }
 
     public static void main(String[] args) {
@@ -76,5 +83,33 @@ public class Main extends JPanel {
         Node snake0 = new Node(snakeX, snakeY);
         snake.getSnakeBody().remove(snake.getSnakeBody().size() - 1);
         snake.getSnakeBody().add(0, snake0);
+        allowKeyPress = true;
+        requestFocusInWindow();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (!allowKeyPress) return;
+        int keyCode = e.getKeyCode();
+        if (keyCode == 37 && !direction.equals("Right")) {
+            direction = "Left";
+        } else if (keyCode == 38 && !direction.equals("Down")) {
+            direction = "Top";
+        } else if (keyCode == 39 && !direction.equals("Left")) {
+            direction = "Right";
+        } else if (keyCode == 40 && !direction.equals("Top")) {
+            direction = "Down";
+        }
+        allowKeyPress = false;
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
