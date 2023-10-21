@@ -20,7 +20,7 @@ public class Main extends JPanel implements KeyListener {
     private Fruit fruit;
     private Timer t;
     // 速度
-    private int speed = 500;
+    private int speed = 100;
 
     // 是否可按上下左右
     private boolean allowKeyPress;
