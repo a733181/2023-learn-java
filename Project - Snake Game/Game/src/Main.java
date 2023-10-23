@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,23 +22,15 @@ public class Main extends JPanel implements KeyListener {
     private Timer t;
     // 速度
     private int speed = 100;
+    // 分數
+    private int score;
 
     // 是否可按上下左右
     private boolean allowKeyPress;
 
     public Main() {
-        snake = new Snake();
-        fruit = new Fruit();
-        t = new Timer();
-        t.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                repaint();
-            }
-        }, 0, speed);
-        direction = "Right";
+        reset();
         addKeyListener(this);
-        allowKeyPress = true;
     }
 
     public static void main(String[] args) {
@@ -55,8 +48,60 @@ public class Main extends JPanel implements KeyListener {
         return new Dimension(width, height);
     }
 
+
+    private void setTimer() {
+        t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                repaint();
+            }
+        }, 0, speed);
+    }
+
+    private void reset() {
+        score = 0;
+        if (snake != null) {
+            snake.getSnakeBody().clear();
+        }
+        allowKeyPress = true;
+        direction = "Right";
+        snake = new Snake();
+        fruit = new Fruit();
+        setTimer();
+    }
+
     @Override
     public void paintComponent(Graphics g) {
+        // check if the snake bite itself
+        ArrayList<Node> tempSnakeBody = snake.getSnakeBody();
+        Node snakeHead = tempSnakeBody.get(0);
+        for (int i = 1; i < tempSnakeBody.size(); i++) {
+            if (tempSnakeBody.get(i).x == snakeHead.x && tempSnakeBody.get(i).y == snakeHead.y) {
+                allowKeyPress = false;
+                // 取消計時器
+                t.cancel();
+                // 清除計時器的任務隊列中已取消的任務
+                t.purge();
+                int response = JOptionPane.showOptionDialog(this, "是否要重新開始？", "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, JOptionPane.YES_OPTION);
+
+                switch (response) {
+                    case JOptionPane.CLOSED_OPTION: {
+                        System.exit(0);
+                        break;
+                    }
+                    case JOptionPane.NO_OPTION: {
+                        System.exit(0);
+                        break;
+                    }
+                    case JOptionPane.YES_OPTION: {
+                        reset();
+                        return;
+                    }
+                }
+            }
+        }
+
         // draw a black background
         g.fillRect(0, 0, width, height);
         fruit.drawFruit(g);
@@ -65,8 +110,6 @@ public class Main extends JPanel implements KeyListener {
         // remove snake tail and put in head
         int snakeX = snake.getSnakeBody().get(0).x;
         int snakeY = snake.getSnakeBody().get(0).y;
-
-
         // Right , x += CELL_SIZE
         // Left , x -= CELL_SIZE
         // down , y += CELL_SIZE
