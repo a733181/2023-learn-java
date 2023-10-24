@@ -2,7 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,6 +22,7 @@ public class Main extends JPanel implements KeyListener {
     public static int col = width / CELL_SIZE;
     // 方向
     private static String direction;
+    private final String ScoreFileName = "highestScore.txt";
     private Snake snake;
     private Fruit fruit;
     private Timer t;
@@ -24,11 +30,12 @@ public class Main extends JPanel implements KeyListener {
     private int speed = 100;
     // 分數
     private int score;
-
+    private int highestScore;
     // 是否可按上下左右
     private boolean allowKeyPress;
 
     public Main() {
+        readHighestScore();
         reset();
         addKeyListener(this);
     }
@@ -83,8 +90,8 @@ public class Main extends JPanel implements KeyListener {
                 t.cancel();
                 // 清除計時器的任務隊列中已取消的任務
                 t.purge();
-                int response = JOptionPane.showOptionDialog(this, "是否要重新開始？", "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, JOptionPane.YES_OPTION);
-
+                int response = JOptionPane.showOptionDialog(this, "您的分數是：" + score + "，最高分為：" + highestScore + " 是否要重新開始？", "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, JOptionPane.YES_OPTION);
+                writerAFile(score);
                 switch (response) {
                     case JOptionPane.CLOSED_OPTION: {
                         System.exit(0);
@@ -132,6 +139,7 @@ public class Main extends JPanel implements KeyListener {
             // score++
             fruit.setNewLocation(snake);
             fruit.drawFruit(g);
+            score++;
         } else {
             snake.getSnakeBody().remove(snake.getSnakeBody().size() - 1);
         }
@@ -165,5 +173,43 @@ public class Main extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    public void readHighestScore() {
+        try {
+            File myObj = new File(ScoreFileName);
+            Scanner myReader = new Scanner(myObj);
+            highestScore = myReader.nextInt();
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            highestScore = 0;
+            try {
+                File myObj = new File(ScoreFileName);
+                if (myObj.createNewFile()) {
+                    System.out.println("File create");
+                }
+
+                FileWriter myWriter = new FileWriter(myObj.getName());
+                myWriter.write("" + 0);
+            } catch (IOException err) {
+                System.out.println("建立檔案失敗!");
+                err.printStackTrace();
+            }
+        }
+    }
+
+    public void writerAFile(int score) {
+        try {
+            FileWriter myWriter = new FileWriter(ScoreFileName);
+            if (score > highestScore) {
+                myWriter.write("" + score);
+                highestScore = score;
+            } else {
+                myWriter.write("" + highestScore);
+            }
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
