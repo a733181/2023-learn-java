@@ -7,7 +7,8 @@ public class Fruit extends Node {
 
     public Fruit() {
         super((int) Math.floor(Math.random() * Main.col) * Main.CELL_SIZE, (int) Math.floor(Math.random() * Main.row) * Main.CELL_SIZE);
-        img = new ImageIcon("src/fruit.png");
+//        img = new ImageIcon("src/fruit.png");
+        img = new ImageIcon(getClass().getResource("fruit.png"));
     }
 
     public void drawFruit(Graphics g) {

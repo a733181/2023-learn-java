@@ -22,6 +22,7 @@ public class Main extends JPanel implements KeyListener {
     public static int col = width / CELL_SIZE;
     // 方向
     private static String direction;
+    private final String fileToSave = System.getProperty("user.home") + "/Desktop/";
     private final String ScoreFileName = "highestScore.txt";
     private Snake snake;
     private Fruit fruit;
@@ -179,7 +180,11 @@ public class Main extends JPanel implements KeyListener {
         try {
             File myObj = new File(ScoreFileName);
             Scanner myReader = new Scanner(myObj);
-            highestScore = myReader.nextInt();
+            if (myReader.hasNextInt()) {
+                highestScore = myReader.nextInt();
+            } else {
+                highestScore = 0;
+            }
             myReader.close();
         } catch (FileNotFoundException e) {
             highestScore = 0;
@@ -190,7 +195,7 @@ public class Main extends JPanel implements KeyListener {
                 }
 
                 FileWriter myWriter = new FileWriter(myObj.getName());
-                myWriter.write("" + 0);
+                myWriter.write("" + highestScore);
             } catch (IOException err) {
                 System.out.println("建立檔案失敗!");
                 err.printStackTrace();
