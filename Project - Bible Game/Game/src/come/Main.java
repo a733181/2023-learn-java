@@ -15,7 +15,7 @@ public class Main extends JPanel {
     public static final int ROW = HEIGHT / CELL;
     public static final int COL = WIDTH / CELL;
 
-    public static final String imgPath = "src/come/img";
+    public static final String imgPath = "src/come/img/";
     public static GameView gameView;
     Moses moses;
 
