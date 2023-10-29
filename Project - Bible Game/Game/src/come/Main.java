@@ -20,10 +20,10 @@ public class Main extends JPanel implements KeyListener {
     public static final String imgPath = "src/come/img/";
     public static GameView gameView;
     Moses moses;
+    private int level;
 
     public Main() {
-        moses = new Moses(1, 1);
-        gameView = new DisasterView();
+        resetGame(new DisasterView());
         addKeyListener(this);
     }
 
@@ -35,6 +35,13 @@ public class Main extends JPanel implements KeyListener {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.setResizable(false);
+    }
+
+    public void resetGame(GameView game) {
+        moses = new Moses(1, 1);
+        gameView = game;
+        level = 1;
+        repaint();
     }
 
     @Override
@@ -59,34 +66,68 @@ public class Main extends JPanel implements KeyListener {
         Point mosesPoint = moses.getRelativePosition();
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP: {
-
                 if (mosesPoint.y > 1) {
-                    mosesPoint.y -= 1;
+                    String result = moses.overlap(mosesPoint.x, mosesPoint.y - 1);
+                    if (result.equals("Die")) {
+                        //reset game
+                        JOptionPane.showMessageDialog(this, "You Die,Please Try Again");
+                        resetGame(new DisasterView());
+                        return;
+                    }
+                    if (!result.equals("Cannot move")) {
+                        mosesPoint.y -= 1;
+                    }
                 }
                 break;
             }
             case KeyEvent.VK_DOWN: {
                 if (mosesPoint.y < ROW) {
-                    mosesPoint.y += 1;
+                    String result = moses.overlap(mosesPoint.x, mosesPoint.y + 1);
+                    if (result.equals("Die")) {
+                        //reset game
+                        JOptionPane.showMessageDialog(this, "You Die,Please Try Again");
+                        resetGame(new DisasterView());
+                        return;
+                    }
+                    if (!result.equals("Cannot move")) {
+                        mosesPoint.y += 1;
+
+                    }
                 }
                 break;
             }
             case KeyEvent.VK_RIGHT: {
                 if (mosesPoint.x < COL) {
-                    mosesPoint.x += 1;
+                    String result = moses.overlap(mosesPoint.x + 1, mosesPoint.y);
+                    if (result.equals("Die")) {
+                        //reset game
+                        JOptionPane.showMessageDialog(this, "You Die,Please Try Again");
+                        resetGame(new DisasterView());
+                        return;
+                    }
+                    if (!result.equals("Cannot move")) {
+                        mosesPoint.x += 1;
+                    }
                 }
                 break;
             }
             case KeyEvent.VK_LEFT: {
                 if (mosesPoint.x > 1) {
-                    mosesPoint.x -= 1;
+                    String result = moses.overlap(mosesPoint.x - 1, mosesPoint.y);
+                    if (result.equals("Die")) {
+                        //reset game
+                        JOptionPane.showMessageDialog(this, "You Die,Please Try Again");
+                        resetGame(new DisasterView());
+                        return;
+                    }
+                    if (!result.equals("Cannot move")) {
+                        mosesPoint.x -= 1;
+                    }
                 }
                 break;
             }
         }
-        int x = mosesPoint.x;
-        int y = mosesPoint.y;
-        moses.setPosition(x, y);
+        moses.setPosition(mosesPoint.x, mosesPoint.y);
         repaint();
     }
 

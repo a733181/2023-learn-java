@@ -1,5 +1,6 @@
 package come.GameView;
 
+import come.Main;
 import come.Sprite.Door;
 import come.Sprite.Sprite;
 
@@ -16,6 +17,8 @@ public abstract class GameView {
 
     public void drawView(Graphics g) {
         img.paintIcon(null, g, 0, 0);
+        g.setColor(new Color(0f, 0f, 0f, .3f));
+        g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
         for (Sprite s : elements) {
             s.draw(g);
         }
