@@ -15,6 +15,14 @@ public abstract class GameView {
     protected Door door;
     protected ImageIcon img;
 
+    public Door getDoor() {
+        return this.door;
+    }
+
+    public ArrayList<Sprite> getElements() {
+        return this.elements;
+    }
+
     public void drawView(Graphics g) {
         img.paintIcon(null, g, 0, 0);
         g.setColor(new Color(0f, 0f, 0f, .3f));

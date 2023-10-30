@@ -20,7 +20,7 @@ public class DisasterView extends GameView {
     public DisasterView() {
         img = new ImageIcon(Main.imgPath + "egypt.jpg");
         elements = new ArrayList<>();
-        Door door = new Door(10, 10);
+        door = new Door(10, 10);
 
         bugs.add(new Bug(10, 5));
         bugs.add(new Bug(9, 5));
