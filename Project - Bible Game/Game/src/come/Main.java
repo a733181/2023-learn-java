@@ -4,7 +4,15 @@ import come.GameView.DisasterView;
 import come.GameView.GameView;
 import come.GameView.RedSeaGameView;
 import come.GameView.TenCommandmentsView;
+import come.Sprite.DisasterViewSprite.Bug;
+import come.Sprite.DisasterViewSprite.Frog;
+import come.Sprite.DisasterViewSprite.Ice;
+import come.Sprite.DisasterViewSprite.Stone;
 import come.Sprite.Moses;
+import come.Sprite.RedSeaViewSprite.Anubis;
+import come.Sprite.RedSeaViewSprite.Cat;
+import come.Sprite.RedSeaViewSprite.Pharaoh;
+import come.Sprite.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
@@ -157,6 +165,74 @@ public class Main extends JPanel implements KeyListener {
                         JOptionPane.showMessageDialog(this, "You Win");
                     }
                     if (changeLevel(result)) return;
+                }
+                break;
+            }
+            case KeyEvent.VK_W: {
+                for (int i = mosesPoint.y; i > 0; i--) {
+                    for (Sprite s : gameView.getElements()) {
+                        if (s.getRelativePosition() != null && s.getRelativePosition().x == mosesPoint.x && s.getRelativePosition().y == i) {
+                            if (s instanceof Cat || s instanceof Ice || s instanceof Stone) {
+                                return;
+                            }
+                            if (s instanceof Anubis || s instanceof Pharaoh || s instanceof Bug || s instanceof Frog) {
+                                s.setNullPosition();
+                                repaint();
+                                return;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+            case KeyEvent.VK_S: {
+                for (int i = mosesPoint.y; i <= ROW; i++) {
+                    for (Sprite s : gameView.getElements()) {
+                        if (s.getRelativePosition() != null && s.getRelativePosition().x == mosesPoint.x && s.getRelativePosition().y == i) {
+                            if (s instanceof Cat || s instanceof Ice || s instanceof Stone) {
+                                return;
+                            }
+                            if (s instanceof Anubis || s instanceof Pharaoh || s instanceof Bug || s instanceof Frog) {
+                                s.setNullPosition();
+                                repaint();
+                                return;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+            case KeyEvent.VK_D: {
+                for (int i = mosesPoint.x; i <= COL; i++) {
+                    for (Sprite s : gameView.getElements()) {
+                        if (s.getRelativePosition() != null && s.getRelativePosition().x == i && s.getRelativePosition().y == mosesPoint.y) {
+                            if (s instanceof Cat || s instanceof Ice || s instanceof Stone) {
+                                return;
+                            }
+                            if (s instanceof Anubis || s instanceof Pharaoh || s instanceof Bug || s instanceof Frog) {
+                                s.setNullPosition();
+                                repaint();
+                                return;
+                            }
+                        }
+                    }
+                }
+                break;
+            }
+            case KeyEvent.VK_A: {
+                for (int i = mosesPoint.x; i > 0; i--) {
+                    for (Sprite s : gameView.getElements()) {
+                        if (s.getRelativePosition() != null && s.getRelativePosition().x == i && s.getRelativePosition().y == mosesPoint.y) {
+                            if (s instanceof Cat || s instanceof Ice || s instanceof Stone) {
+                                return;
+                            }
+                            if (s instanceof Anubis || s instanceof Pharaoh || s instanceof Bug || s instanceof Frog) {
+                                s.setNullPosition();
+                                repaint();
+                                return;
+                            }
+                        }
+                    }
                 }
                 break;
             }
