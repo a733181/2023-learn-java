@@ -9,7 +9,7 @@ public class Stone extends Sprite {
 
     public Stone(int x, int y) {
         setPosition(x, y);
-        img = new ImageIcon(Main.imgPath + "stone.png");
+        img = new ImageIcon(Main.imgPath + "tombstone.png");
     }
 
     @Override

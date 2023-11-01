@@ -82,10 +82,19 @@ public class Moses extends Sprite {
                 return "Next level";
             }
         } else if (Main.gameView instanceof TenCommandmentsView) {
-            Tombstone tombstone = ((TenCommandmentsView) Main.gameView).getTombstone();
 
-            if (x == tombstone.getRelativePosition().x && y == tombstone.getRelativePosition().y) {
-                return "Game Over";
+            ArrayList<Tombstone> tombstones = ((TenCommandmentsView) Main.gameView).getTombstones();
+
+            for (Tombstone t : tombstones) {
+                if (t.getRelativePosition() != null && t.getRelativePosition().x == x && t.getRelativePosition().y == y) {
+                    t.setNullPosition();
+                    ((TenCommandmentsView) Main.gameView).setCount(1);
+                    if (((TenCommandmentsView) Main.gameView).getCount() == 10) {
+                        return "Game Over";
+                    } else {
+                        return "none";
+                    }
+                }
             }
 
         }

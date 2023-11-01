@@ -8,16 +8,39 @@ import java.util.ArrayList;
 
 public class TenCommandmentsView extends GameView {
 
-    private Tombstone tombstone;
+
+    private ArrayList<Tombstone> tombstones = new ArrayList<>();
+    private int count;
 
     public TenCommandmentsView() {
         img = new ImageIcon(Main.imgPath + "mountain.jpg");
         elements = new ArrayList<>();
-        tombstone = new Tombstone(5, 5);
-        elements.add(tombstone);
+        count = 0;
+        tombstones.add(new Tombstone(5, 5));
+        tombstones.add(new Tombstone(1, 5));
+        tombstones.add(new Tombstone(3, 4));
+        tombstones.add(new Tombstone(2, 5));
+        tombstones.add(new Tombstone(3, 5));
+        tombstones.add(new Tombstone(4, 5));
+        tombstones.add(new Tombstone(5, 7));
+        tombstones.add(new Tombstone(8, 9));
+        tombstones.add(new Tombstone(1, 10));
+        tombstones.add(new Tombstone(2, 10));
+
+        elements.addAll(tombstones);
+
     }
 
-    public Tombstone getTombstone() {
-        return tombstone;
+    public int getCount() {
+        return count;
     }
+
+    public void setCount(int count) {
+        this.count += count;
+    }
+
+    public ArrayList<Tombstone> getTombstones() {
+        return tombstones;
+    }
+
 }

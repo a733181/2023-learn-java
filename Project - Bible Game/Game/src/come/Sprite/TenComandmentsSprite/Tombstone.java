@@ -7,6 +7,7 @@ import javax.swing.*;
 
 public class Tombstone extends Sprite {
 
+
     public Tombstone(int x, int y) {
         setPosition(x, y);
         img = new ImageIcon(Main.imgPath + "stone.png");
