@@ -2,15 +2,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class Dev {
+public class DB {
 
 
     private String url;
     private String userName;
     private String userPassword;
 
-    public void getDev() {
-        try (InputStream input = Dev.class.getClassLoader().getResourceAsStream("dev.properties")) {
+    public void getDB() {
+        try (InputStream input = DB.class.getClassLoader().getResourceAsStream("dev.properties")) {
             if (input == null) {
                 System.out.println("Sorry, unable to find dev.properties");
                 return;
