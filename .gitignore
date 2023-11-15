@@ -24,4 +24,4 @@ hs_err_pid*
 replay_pid*
 
 dev.properties
-apache-tomcat-9.0.85
+apache-tomcat-*
