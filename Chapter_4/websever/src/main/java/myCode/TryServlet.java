@@ -26,6 +26,19 @@ public class TryServlet extends HttpServlet {
         out.println("</body></html>");
     }
 
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Handle POST requests here, if needed
+        // You can access request parameters using request.getParameter("parameterName")
+
+        response.setContentType("text/html");
+
+        // Hello from POST
+        PrintWriter out = response.getWriter();
+        out.println("<html><body>");
+        out.println("<h1>Hello from POST!</h1>");
+        out.println("</body></html>");
+    }
+
     public void destroy() {
     }
 }
