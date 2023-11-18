@@ -12,15 +12,13 @@
 </head>
 <body>
 <p>This is My Form</p>
-<form action="http://localhost:8080/get-form-servlet" method="get">
-    <label for="name">Book Name</label>
+<form action="http://localhost:8080/form-servlet" method="post">
+    <label for="name">name</label>
     <input type="text" id="name" name="name">
     <br>
     <label for="price">Price</label>
     <input type="number" id="price" name="price">
     <br>
-    <label for="authro">Authro</label>
-    <input type="text" id="authro" name="authro">
     <br>
     <input type="submit" value="submit">
 </form>
