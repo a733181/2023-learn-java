@@ -12,7 +12,7 @@
 </head>
 <body>
 <p>This is My Form</p>
-<form action="http://localhost:8080/form-servlet" method="post">
+<form action="http://localhost:8080/cookie-servlet" method="get">
     <label for="name">name</label>
     <input type="text" id="name" name="name">
     <br>
