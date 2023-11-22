@@ -1,8 +1,12 @@
 package video;
 
 public class Video {
+    private int id;
     private String name;
     private int price;
+
+    public Video() {
+    }
 
     public String getName() {
         return name;
@@ -18,5 +22,13 @@ public class Video {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
